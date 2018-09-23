@@ -24,6 +24,7 @@
 			velocityX = SPEED * Math.cos(angle);
 			velocityY = SPEED * Math.sin(angle);
 			
+			
 		}
 		
 		public function update():void {
