@@ -12,7 +12,7 @@
 		
 		public var radius:Number = 51;
 		
-		public var unscoredAmmo = 0;
+
 		
 		public function Snow() {
 			x = Math.random() * 550;
@@ -32,7 +32,7 @@
 			}
 		}
 		private function handleClick(e:MouseEvent):void {
-			Game.ammo += 10;
+
 			isDead = true;
 		}
 		/**

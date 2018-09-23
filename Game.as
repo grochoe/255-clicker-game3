@@ -17,7 +17,13 @@
 		/** This array holds only Bullet objects. */
 		var bullets: Array = new Array();
 
+		var isMouseDown: Boolean = false
+
 		public static var ammo: Number = 20;
+
+		public static var specialAmmo: Number = 50;
+
+		public static var ammoType: int = 4;
 
 		/**
 		 * This is where we setup the game.
@@ -26,6 +32,7 @@
 
 			addEventListener(Event.ENTER_FRAME, gameLoop);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, handleClick);
+			stage.addEventListener(MouseEvent.MOUSE_UP, handleUp);
 
 		}
 		/**
@@ -39,26 +46,65 @@
 
 			player.update();
 
+			if (ammoType == 3 && isMouseDown) {
+				spawnBullet();
+			}
+
 			updateSnow();
 
 			updateBullets();
 
 			collisionDetection();
-			
+
 			trace(ammo);
 
 		} // function gameLoop
 
-		private function handleClick(e: MouseEvent): void {
-			spawnBullet();
+		private function handleUp(e: MouseEvent): void {
+			isMouseDown = false;
 		}
+		private function handleClick(e: MouseEvent): void {
+			isMouseDown = true;
+			spawnBullet();
+		} //end handleClick
 
 		private function spawnBullet(): void {
+			if (ammoType == 1 || ammoType == 3) {
+				var j: Bullet = new Bullet(player, 0);
+				addChild(j);
+				bullets.push(j);
+				ammo -= 1;
+			} //end If
+			else if (ammoType == 2) {
+				var a: Bullet = new Bullet(player, 0);
+				addChild(a);
+				bullets.push(a);
 
-			var b: Bullet = new Bullet(player);
-			addChild(b);
-			bullets.push(b);
-		}
+				var b: Bullet = new Bullet(player, 1);
+				addChild(b);
+				bullets.push(b)
+
+				var c: Bullet = new Bullet(player, 2);
+				addChild(c);
+				bullets.push(c);
+
+				specialAmmo -= 1;
+			} // end else if
+			else if (ammoType == 4) {
+				var m: Bullet = new Bullet(player, 3);
+				addChild(m);
+				bullets.push(m)
+				specialAmmo -= 1;
+				for (var i = snowflakes.length - 1; i >= 0; i--) {
+					snowflakes[i].isDead = true;
+					ammo += 10
+				} //end for
+				bullets[m].isDead = true;
+			} //end else if
+
+
+		} //end spawnBullet
+
 
 		/**
 		 * Decrements the countdown timer, when it hits 0, it spawns a snowflake.
