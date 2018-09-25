@@ -23,7 +23,7 @@
 
 		public static var specialAmmo: Number = 50;
 
-		public static var ammoType: int = 4;
+		public static var ammoType: int = 2;
 
 		/**
 		 * This is where we setup the game.
